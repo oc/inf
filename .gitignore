@@ -1,11 +1,11 @@
 # OpenTofu
 **/.terraform/
-**/.terraform.lock.hcl
 *.tfstate
 *.tfstate.backup
 *.tfvars
 !*.example.tfvars
 crash.log
+# .terraform.lock.hcl IS tracked — keeps provider versions reproducible
 
 # Decrypted secrets (never commit)
 secrets.yaml

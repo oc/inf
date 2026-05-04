@@ -6,8 +6,10 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-if [ ! -s "${SOPS_AGE_KEY_FILE:-$HOME/.config/sops/age/keys.txt}" ]; then
-    echo "✗ age private key not found at ${SOPS_AGE_KEY_FILE:-$HOME/.config/sops/age/keys.txt}" >&2
+export SOPS_AGE_KEY_FILE="${SOPS_AGE_KEY_FILE:-$HOME/.config/sops/age/keys.txt}"
+
+if [ ! -s "$SOPS_AGE_KEY_FILE" ]; then
+    echo "✗ age private key not found at $SOPS_AGE_KEY_FILE" >&2
     echo "  restore with: op read 'op://o19g/e9m-sops-age-key/private_key' > ~/.config/sops/age/keys.txt && chmod 600 ~/.config/sops/age/keys.txt" >&2
     exit 1
 fi

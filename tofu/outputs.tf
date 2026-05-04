@@ -17,4 +17,5 @@ output "vm_inventory" {
 output "zones" {
   description = "Cloudflare zone IDs in this account"
   value       = local.zone_ids
+  sensitive   = true # values flow from sops, so tofu requires sensitive=true even though zone IDs are not really secret
 }
