@@ -1,0 +1,57 @@
+#cloud-config
+# Cloud-init for Kamal-ready VMs. Templated via tofu's templatefile() — variables:
+#   ${hostname}       short hostname (e.g. dev1)
+#   ${fqdn}           fully-qualified hostname (e.g. dev1.e9m.tech)
+#   ${oc_ssh_pubkey}  oc's ed25519 public key (from secrets.sops.yaml -> ssh.oc_pubkey)
+
+hostname: ${hostname}
+fqdn: ${fqdn}
+manage_etc_hosts: true
+
+timezone: Europe/Oslo
+locale: en_US.UTF-8
+
+users:
+  - name: oc
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: [adm, sudo, docker]
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ${oc_ssh_pubkey}
+  - name: kamal
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: [docker]
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ${oc_ssh_pubkey}
+
+# Disable password login for root, force key-based.
+ssh_pwauth: false
+
+# Auto-update package metadata on first boot; let unattended-upgrades handle ongoing security.
+package_update: true
+package_upgrade: false
+
+packages:
+  - qemu-guest-agent
+  - docker.io
+  - docker-compose-plugin
+  - curl
+  - vim
+  - tmux
+  - htop
+  - jq
+  - unattended-upgrades
+
+write_files:
+  - path: /etc/apt/apt.conf.d/20auto-upgrades
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "1";
+
+runcmd:
+  - systemctl enable --now qemu-guest-agent
+  - systemctl enable --now docker
+  - systemctl enable --now unattended-upgrades
+  # Lock root password (only ssh key login allowed)
+  - passwd -l root

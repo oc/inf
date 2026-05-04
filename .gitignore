@@ -1,0 +1,28 @@
+# OpenTofu
+**/.terraform/
+**/.terraform.lock.hcl
+*.tfstate
+*.tfstate.backup
+*.tfvars
+!*.example.tfvars
+crash.log
+
+# Decrypted secrets (never commit)
+secrets.yaml
+secrets.json
+*.dec
+*.decrypted
+
+# Cloud-init rendered output
+cloud-init/*.rendered.yaml
+
+# Local
+.DS_Store
+.envrc
+.env
+*.log
+
+# Editors
+.idea/
+.vscode/
+*.swp

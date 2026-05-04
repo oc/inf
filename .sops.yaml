@@ -1,0 +1,5 @@
+# Sops encryption rules — any file matching path_regex gets encrypted with the listed age recipients.
+# Add team-mate age public keys here when team grows; rotation is just a `sops updatekeys`.
+creation_rules:
+  - path_regex: \.sops\.ya?ml$
+    age: age1z783fdeptghhpzyfpq89lq749ph02svpavmdsm4tc4pgxn54gq8qd6pxy3
