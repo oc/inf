@@ -24,8 +24,9 @@ locals {
   }
 
   # Convenience handles
-  oc_ssh_pubkey = data.sops_file.secrets.data["ssh.oc_pubkey"]
-  cf_account_id = data.sops_file.secrets.data["cloudflare.account_id"]
+  oc_ssh_pubkey         = data.sops_file.secrets.data["ssh.oc_pubkey"]
+  e9m_automation_pubkey = data.sops_file.secrets.data["ssh.e9m_automation_pubkey"]
+  cf_account_id         = data.sops_file.secrets.data["cloudflare.account_id"]
   zone_ids = {
     "e9m.no"         = data.sops_file.secrets.data["cloudflare.zones.e9m_no"]
     "e9m.tech"       = data.sops_file.secrets.data["cloudflare.zones.e9m_tech"]

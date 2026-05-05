@@ -1,8 +1,9 @@
 #cloud-config
 # Cloud-init for Kamal-ready VMs. Templated via tofu's templatefile() — variables:
-#   ${hostname}       short hostname (e.g. dev1)
-#   ${fqdn}           fully-qualified hostname (e.g. dev1.e9m.tech)
-#   ${oc_ssh_pubkey}  oc's ed25519 public key (from secrets.sops.yaml -> ssh.oc_pubkey)
+#   ${hostname}              short hostname (e.g. dev1)
+#   ${fqdn}                  fully-qualified hostname (e.g. dev1.e9m.tech)
+#   ${oc_ssh_pubkey}         oc's personal ed25519 pubkey (passphrase-protected, agent-loaded)
+#   ${e9m_automation_pubkey} dedicated automation key (no passphrase, used by tofu/scripts)
 
 hostname: ${hostname}
 fqdn: ${fqdn}
@@ -18,12 +19,14 @@ users:
     shell: /bin/bash
     ssh_authorized_keys:
       - ${oc_ssh_pubkey}
+      - ${e9m_automation_pubkey}
   - name: kamal
     sudo: ALL=(ALL) NOPASSWD:ALL
     groups: [docker]
     shell: /bin/bash
     ssh_authorized_keys:
       - ${oc_ssh_pubkey}
+      - ${e9m_automation_pubkey}
 
 # Disable password login for root, force key-based.
 ssh_pwauth: false

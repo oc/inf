@@ -33,9 +33,10 @@ locals {
     for name, v in local.vms : name => templatefile(
       "${path.module}/../cloud-init/${v.cloud_init}.yaml",
       {
-        hostname      = name
-        fqdn          = "${name}.e9m.tech"
-        oc_ssh_pubkey = local.oc_ssh_pubkey
+        hostname              = name
+        fqdn                  = "${name}.e9m.tech"
+        oc_ssh_pubkey         = local.oc_ssh_pubkey
+        e9m_automation_pubkey = local.e9m_automation_pubkey
       }
     )
   }
