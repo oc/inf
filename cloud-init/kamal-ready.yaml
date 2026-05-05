@@ -38,7 +38,7 @@ package_upgrade: false
 packages:
   - qemu-guest-agent
   - docker.io
-  - docker-compose-plugin
+  - docker-compose-v2     # Ubuntu noble's compose v2 plugin (docker-compose-plugin only exists in Docker's apt repo)
   - curl
   - vim
   - tmux
