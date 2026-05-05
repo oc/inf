@@ -31,8 +31,15 @@ locals {
   e9m_automation_pubkey = data.sops_file.secrets.data["ssh.e9m_automation_pubkey"]
   cf_account_id         = data.sops_file.secrets.data["cloudflare.account_id"]
   zone_ids = {
-    "e9m.no"         = data.sops_file.secrets.data["cloudflare.zones.e9m_no"]
-    "e9m.tech"       = data.sops_file.secrets.data["cloudflare.zones.e9m_tech"]
-    "equilibrium.no" = data.sops_file.secrets.data["cloudflare.zones.equilibrium_no"]
+    "dialogadvokat.no" = data.sops_file.secrets.data["cloudflare.zones.dialogadvokat_no"]
+    "e9m.no"           = data.sops_file.secrets.data["cloudflare.zones.e9m_no"]
+    "e9m.online"       = data.sops_file.secrets.data["cloudflare.zones.e9m_online"]
+    "e9m.tech"         = data.sops_file.secrets.data["cloudflare.zones.e9m_tech"]
+    "equilibrium.no"   = data.sops_file.secrets.data["cloudflare.zones.equilibrium_no"]
+    "irb.no"           = data.sops_file.secrets.data["cloudflare.zones.irb_no"]
+    "muda.no"          = data.sops_file.secrets.data["cloudflare.zones.muda_no"]
+    "o19g.com"         = data.sops_file.secrets.data["cloudflare.zones.o19g_com"]
+    "perseus.no"       = data.sops_file.secrets.data["cloudflare.zones.perseus_no"]
+    "rynning.no"       = data.sops_file.secrets.data["cloudflare.zones.rynning_no"]
   }
 }
