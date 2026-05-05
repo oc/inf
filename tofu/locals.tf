@@ -15,12 +15,15 @@ locals {
     pve2 = "pve2"
   }
 
-  # VM internal network — provisioned on VyOS gw1+gw2, see ~/dev/infrastructure/GW/
+  # VM internal network — provisioned on VyOS gw1+gw2 (committed in ~/dev/infrastructure/GW/).
+  # eth1 on the gw is multi-net L2: 10.0.206/24 + 10.99.1/24 + 10.100.0/24 share the same
+  # broadcast domain (no VLAN tagging). pve1/pve2's vmbr0 is on that same L2, so VMs with
+  # 10.100.0.X + gw 10.100.0.254 work directly via vmbr0 — no vmbr1 needed.
   vm_network = {
     cidr     = "10.100.0.0/24"
-    gateway  = "10.100.0.254" # VRRP VIP on VyOS
-    bridge   = "vmbr1"        # Linux bridge on each PVE node
-    vlan_tag = null           # null = untagged on the bridge; set if VLAN-tagged
+    gateway  = "10.100.0.254" # VRRP VIP on VyOS (gw1 master at .252, gw2 backup at .253)
+    bridge   = "vmbr0"        # default PVE bridge
+    vlan_tag = null           # untagged
   }
 
   # Convenience handles
